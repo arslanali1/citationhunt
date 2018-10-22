@@ -29,7 +29,8 @@ class CitationHuntTest(unittest.TestCase):
         methods_and_return_values = [
             ('query_snippet_by_category', (self.sid,)),
             ('query_random_snippet', (self.sid,)),
-            ('query_next_id', (self.sid[::-1],)),
+            ('query_next_id_in_category', (self.sid[::-1],)),
+            ('query_next_id_in_intersection', (self.sid[::-1],)),
             ('query_fixed_snippets', 6)
         ]
 

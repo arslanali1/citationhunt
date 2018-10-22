@@ -1,4 +1,5 @@
 import errno
+import itertools as it
 import os
 import sys
 import hashlib
@@ -53,3 +54,16 @@ class Logger(object):
 
         print >>sys.stderr, message
         self._mode = 'INFO'
+
+def pair_with_next(iterator):
+    """
+    Given an iterator (..., x, y, z, w, ...), returns another iterator of
+    tuples that pair each element to its successor, that is
+    (..., (x, y), (y, z), (z, w), ...).
+
+    The iterator "wraps around" at the end, that is, the last element is
+    paired with the first.
+    """
+
+    i1, i2 = it.tee(iterator)
+    return it.izip(i1, it.chain(i2, [next(i2)]))

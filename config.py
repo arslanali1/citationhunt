@@ -31,6 +31,12 @@ _GLOBAL_CONFIG = dict(
     stats_max_age_days = 90,
 
     user_agent = 'citationhunt (https://tools.wmflabs.org/citationhunt)',
+
+    # The maximum number of articles to import into an intersection.
+    intersection_max_size = 4096,
+
+    # How long before an intersection is deleted from the database.
+    intersection_expiration_days = 30,
 )
 
 # A base configuration that all languages "inherit" from.

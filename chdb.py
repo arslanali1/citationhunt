@@ -171,6 +171,18 @@ def reset_scratch_db():
     create_tables(db)
     return db
 
+def copy_tables_to_scratch(table_and_select_stmt_tuples):
+    cfg = config.get_localized_config()
+    db = init_scratch_db()
+    def do_copy(cursor):
+        for table, select_stmt in table_and_select_stmt_tuples:
+            from_table = _make_tools_labs_dbname(
+                db, 'citationhunt', cfg.lang_code) + '.' + table
+            cursor.execute('DELETE FROM ' + table)
+            cursor.execute('INSERT INTO ' + table + ' ' + select_stmt % (
+                from_table))
+    db.execute_with_retry(do_copy)
+
 def install_scratch_db():
     cfg = config.get_localized_config()
     db = init_db(cfg.lang_code)
@@ -208,6 +220,11 @@ def create_tables(db):
             INSERT IGNORE INTO categories VALUES("unassigned", "unassigned")
         ''')
         cursor.execute('''
+            CREATE TABLE IF NOT EXISTS intersections (
+            id VARCHAR(128) PRIMARY KEY, expiration DATETIME)
+            ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        ''')
+        cursor.execute('''
             CREATE TABLE IF NOT EXISTS articles (page_id INT(8) UNSIGNED
             PRIMARY KEY, url VARCHAR(512), title VARCHAR(512))
             ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
@@ -219,6 +236,16 @@ def create_tables(db):
             ON DELETE CASCADE,
             FOREIGN KEY(category_id) REFERENCES categories(id)
             ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        ''')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS articles_intersections (
+            article_id INT(8) UNSIGNED, inter_id VARCHAR(128),
+            PRIMARY KEY(article_id, inter_id),
+            FOREIGN KEY(article_id) REFERENCES articles(page_id)
+            ON DELETE CASCADE,
+            FOREIGN KEY(inter_id) REFERENCES intersections(id)
+            ON DELETE CASCADE)
+            ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
         ''')
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS category_article_count (
@@ -234,9 +261,10 @@ def create_tables(db):
         ''', (cfg.snippet_max_size * 10,))
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS snippets_links (prev VARCHAR(128),
-            next VARCHAR(128), cat_id VARCHAR(128),
+            next VARCHAR(128), cat_id VARCHAR(128), inter_id VARCHAR(128),
             FOREIGN KEY(prev) REFERENCES snippets(id) ON DELETE CASCADE,
             FOREIGN KEY(next) REFERENCES snippets(id) ON DELETE CASCADE,
-            FOREIGN KEY(cat_id) REFERENCES categories(id) ON DELETE CASCADE)
+            FOREIGN KEY(cat_id) REFERENCES categories(id) ON DELETE CASCADE,
+            FOREIGN KEY(inter_id) REFERENCES intersections(id) ON DELETE CASCADE)
             ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
         ''')
