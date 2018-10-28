@@ -94,6 +94,7 @@
             <input type="text" id="category-input" value = "{{ current_category.title }}" autocomplete="off" placeholder="{{ strings.category_filter_placeholder }}">
             <input type="text" id="hidden-id-input" name="id" value="{{ next_snippet_id }}" hidden>
             <input type="text" id="hidden-category-input" name="cat" value="{{ current_category.id }}" hidden>
+            <input type="text" id="hidden-intersection-input" name="inter" value="{{ current_intersection }}" hidden>
           </form>
           <noscript>
             <div id="js-disabled-category-warning">Sorry, filtering by category requires Javascript!</div>

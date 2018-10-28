@@ -23,7 +23,7 @@ def select_random_id(lang_code, category, intersection):
     ret = None
     if category is not CATEGORY_ALL:
         ret = database.query_snippet_by_category(lang_code, category.id)
-    elif intersection is not None:
+    elif intersection:
         ret = database.query_snippet_by_intersection(lang_code, intersection)
 
     if ret is None:
@@ -39,7 +39,7 @@ def select_random_id(lang_code, category, intersection):
     return ret[0]
 
 def select_next_id(lang_code, curr_id, category, intersection):
-    if category is CATEGORY_ALL and intersection is None:
+    if category is CATEGORY_ALL and not intersection:
         next_id = curr_id
         for i in range(3): # super paranoid :)
             next_id = select_random_id(lang_code, category, intersection)
@@ -50,7 +50,7 @@ def select_next_id(lang_code, curr_id, category, intersection):
         ret = database.query_next_id_in_category(
             lang_code, curr_id, category.id)
     else:
-        assert intersection is not None
+        assert intersection
         ret = database.query_next_id_in_intersection(
             lang_code, curr_id, intersection)
     if ret is None:
@@ -63,7 +63,7 @@ def select_next_id(lang_code, curr_id, category, intersection):
 def citation_hunt(lang_code):
     id = flask.request.args.get('id')
     cat = flask.request.args.get('cat')
-    inter = flask.request.args.get('inter')
+    inter = flask.request.args.get('inter', '')
     cfg = flask.g._cfg
     strings = flask.g._strings
 
@@ -72,7 +72,7 @@ def citation_hunt(lang_code):
         lang_dir = flask.request.args.get('dir', lang_dir)
 
     if inter and cat:
-        inter = None
+        inter = ''
 
     cat = get_category_by_id(lang_code, cat)
     if cat is None:
@@ -114,7 +114,7 @@ def citation_hunt(lang_code):
     redirect_params = {'id': id, 'lang_code': lang_code}
     if cat is not CATEGORY_ALL:
         redirect_params['cat'] = cat.id
-    elif inter is not None:
+    elif inter:
         redirect_params['inter'] = inter
     return flask.redirect(
         flask.url_for('citation_hunt', **redirect_params))

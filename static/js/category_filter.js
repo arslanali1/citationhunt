@@ -189,6 +189,22 @@ function CategoryFilter() {
     return sugg1.label.title.localeCompare(sugg2.label.title);
   }
 
+  function confirmBeforeLeavingIntersection(nextCategoryId) {
+    var interhi = document.getElementById("hidden-intersection-input");
+    var leaving = true;
+    if (nextCategoryId && interhi.value) {
+      leaving = window.confirm(strings.leavingIntersection);
+    }
+    if (leaving) {
+      // Disable the hidden input for intersections so we don't end up with a
+      // &inter= in the URL. This is purely for cosmetic reasons as the backend
+      // gives precedence to a category id if it's present. We want to disable
+      // not remove because removing breaks the back button.
+      interhi.disabled = !!chi.value;
+    }
+    return leaving;
+  }
+
   function setHiddenCategoryAndNextId(formElem, nextCategoryId) {
     var ihi = document.getElementById("hidden-id-input");
     if (ihi !== null && chi.value !== nextCategoryId) {
@@ -242,11 +258,18 @@ function CategoryFilter() {
   });
 
   cin.addEventListener("awesomplete-selectcomplete", function(obj) {
+    if (!confirmBeforeLeavingIntersection(obj.text.value)) {
+      cin.value = '';
+      return;
+    }
     setHiddenCategoryAndNextId(this.form, obj.text.value);
     this.form.submit();
   });
 
   cin.form.addEventListener("submit", function() {
+    if (!confirmBeforeLeavingIntersection(chi.value)) {
+      return false;
+    }
     setHiddenCategoryAndNextId(this, chi.value);
     return true;
   });

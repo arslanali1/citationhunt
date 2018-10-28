@@ -27,5 +27,6 @@
 	"leaderboard_description": "These are users that fixed the most snippets through {tooltitle} in the past {days} days. Well done!",
 	"js-article-count": "$1 {{PLURAL:$1|article|articles}}",
 	"js-keyboard-shortcut": "Keyboard shortcut: %s",
-	"js-refs-added-today": "$1 {{PLURAL:$1|citation|citations}} added today!"
+	"js-refs-added-today": "$1 {{PLURAL:$1|citation|citations}} added today!",
+	"js-leaving-intersection": "You are navigating away from the current intersection. Are you sure?"
 }
