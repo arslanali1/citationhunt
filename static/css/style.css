@@ -250,3 +250,10 @@ html[dir="rtl"] #leaderboard td {
 .lead-hint {
     background-color: #EEF31A;
 }
+
+#intersection-notice {
+    background-color: #EEF31A;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+}

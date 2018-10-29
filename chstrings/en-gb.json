@@ -10,6 +10,7 @@
 	"introduction": "Help find citations for Wikipedia articles!",
 	"instructions_goal": "The Wikipedia snippet below is not backed by a {link_start}reliable source{link_end}. Can you find one?",
 	"instructions_details": "Click %s to go to Wikipedia and fix the snippet, or %s to see another one. Check %s if you have questions. Good luck!",
+	"intersection_notice": "You are browsing a restricted group of articles. You can {link_start}click here{link_end} to return to unrestricted {tooltitle}",
 	"in_page": "In page %s:",
 	"button_wikilink": "I've got this!",
 	"button_next": "Next!",

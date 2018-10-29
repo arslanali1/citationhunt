@@ -90,7 +90,7 @@ def citation_hunt(lang_code):
         next_snippet_id = select_next_id(lang_code, id, cat, inter)
         if next_snippet_id is None:
             # snippet doesn't belong to the category or intersection!
-            assert inter is not None or cat is not CATEGORY_ALL
+            assert inter or cat is not CATEGORY_ALL
             return flask.redirect(
                 flask.url_for('citation_hunt',
                     id = id, lang_code = lang_code))

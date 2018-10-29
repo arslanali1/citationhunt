@@ -39,6 +39,11 @@
     <script src="static/js/shortcuts.js" defer></script>
   </head>
   <body>
+    {% if current_intersection and strings.intersection_notice %}
+    <div id="intersection-notice">
+        <span>{{ strings.intersection_notice }}</span>
+    </div>
+    {% endif %}
     <div class="container-fluid py-2">
       <div id="controls" class="row justify-content-end align-items-center px-3 px-sm-1 py-2 py-sm-1">
         {% if strings.leaderboard_link_title %}

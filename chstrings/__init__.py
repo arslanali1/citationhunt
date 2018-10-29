@@ -75,6 +75,14 @@ def _preprocess_variables(config, strings):
                 tooltitle = strings['tooltitle'],
                 days = '%s'))  # The template swaps in the actual number.
 
+    strings.setdefault('intersection_notice', '')
+    if strings['intersection_notice']:
+        strings['intersection_notice'] = flask.Markup(
+            strings['intersection_notice'].format(
+                tooltitle = strings['tooltitle'],
+                link_start = _link_start(config.lang_code, ''),
+                link_end = '</a>'))
+
     return strings
 
 def _partition_js_strings(strings):
