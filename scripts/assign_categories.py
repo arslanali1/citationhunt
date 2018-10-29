@@ -24,20 +24,12 @@ from utils import *
 import docopt
 
 import cProfile
-import itertools as it
 import re
 import collections
 import pstats
 import time
 
 log = Logger()
-
-def ichunk(iterable, chunk_size):
-    it0 = iter(iterable)
-    while True:
-        it1, it2 = it.tee(it.islice(it0, chunk_size))
-        next(it2)  # raises StopIteration if it0 is exhausted
-        yield it1
 
 class CategoryName(unicode):
     '''

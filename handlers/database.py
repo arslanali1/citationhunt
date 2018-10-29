@@ -158,6 +158,6 @@ def create_intersection(lang_code, page_ids, max_pages, expiration_days):
             cursor.executemany('''
                 INSERT IGNORE INTO articles_intersections VALUES (%s, %s)
             ''', [(page_id, inter_id) for page_id in page_ids])
-            populate_snippets_links(cursor, intersection_id = inter_id)
+            populate_snippets_links(cursor, intersection_ids = [inter_id])
         return inter_id, page_ids
     return db.execute_with_retry(insert_intersection)

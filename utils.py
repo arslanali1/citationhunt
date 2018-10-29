@@ -67,3 +67,10 @@ def pair_with_next(iterator):
 
     i1, i2 = it.tee(iterator)
     return it.izip(i1, it.chain(i2, [next(i2)]))
+
+def ichunk(iterable, chunk_size):
+    it0 = iter(iterable)
+    while True:
+        it1, it2 = it.tee(it.islice(it0, chunk_size))
+        next(it2)  # raises StopIteration if it0 is exhausted
+        yield it1
