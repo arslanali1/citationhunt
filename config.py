@@ -407,6 +407,32 @@ _LANG_CODE_TO_CONFIG = dict(
         ],
         hidden_category = 'Dolda_kategorier',
     ),
+    sd = dict(
+        lang_name = 'سنڌي',
+        lang_dir = 'rtl',
+        database = 'sdwiki_p',
+        wikipedia_domain = 'sd.wikipedia.org',
+
+        beginners_link = 'https://sd.wikipedia.org/wiki/%D9%88%DA%AA%D9%8A%D9%BE%D9%8A%DA%8A%D9%8A%D8%A7:%D9%82%D8%A7%D8%A8%D9%84_%D8%AD%D9%88%D8%A7%D9%84%D8%A7',
+        beginners_link_title = 'وڪيپيڊيا:قابل حوالا',
+
+        reliable_sources_link = 'https://sd.wikipedia.org/wiki/%D9%88%DA%AA%D9%8A%D9%BE%D9%8A%DA%8A%D9%8A%D8%A7:%D9%82%D8%A7%D8%A8%D9%84_%D8%AA%D8%B5%D8%AF%D9%8A%D9%82_%D8%AD%D9%88%D8%A7%D9%84%D8%A7',
+
+        lead_section_policy_link = '',
+        lead_section_policy_link_title = '',
+
+        citation_needed_category = 'غير_تصديق_شده_دعوائن_وارا_مضمون',
+
+        hidden_category = 'پوشيدهه_زمرا',
+
+        citation_needed_templates = [
+            'حوالو گھربل',
+            'ڪنهن جي مطابق',
+            'ڪهڙو',
+            'حوالي ۾ موجود ناهي',
+            'تصديق گھربل',
+        ],
+    ),
 
     nb = dict(
         lang_name = 'Norsk (bokmål)',
